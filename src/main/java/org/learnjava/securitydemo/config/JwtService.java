@@ -2,11 +2,8 @@ package org.learnjava.securitydemo.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +18,8 @@ public class JwtService {
 
     private final String secretKey;
 
-    public JwtService(
-            @Value("${application.security.jwt.secret-key}") String secretKey
-    ) {
-        this.secretKey = secretKey;
+    public JwtService(JwtProperties jwtProperties) {
+        this.secretKey = jwtProperties.secretKey();
     }
     public String extractUsername(String token) {
         return extractClaim(token,Claims::getSubject);
